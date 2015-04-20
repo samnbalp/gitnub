@@ -44,6 +44,7 @@ class DhcpPacket:
 		packet += struct.pack('!' + 'B'*16, *(self.Client_Ethernet_address))
 		packet += struct.pack('!'+'B'*64, *(self.sname))
 		packet += struct.pack('!'+'B'*128, *(self.file))
+		packet += b'\x63\x82\x53\x63'
 		if self.mesg==2:
 			packet += b'\x35\x01\x02'   #Option: (t=53,l=2) DHCP Message Type = DHCP Offer
 		elif self.mesg==5:
@@ -83,7 +84,7 @@ class Packet_resolve:
 		data=struct.unpack('!' + 'B'*16, packet[28:44])
 		self.chaddr=[i for i in data]
 		
-		data=struct.unpack('!3B', packet[236:239])
+		data=struct.unpack('!3B', packet[240:243])
 		self.option=[i for i in data]
 
 	def printmesg(self):
