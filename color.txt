@@ -1,0 +1,51 @@
+最外圍的顏色:
+
+p.15
+
+green:
+<p style="background-color:#00CC33">
+Color set by using hex value
+</p>
+
+
+gray:
+<p style="background-color:#787878  ">
+Color set by using hex value
+</p>
+
+
+
+light green:
+<p style="background-color:#66FF99">
+Color set by using hex value
+</p>
+
+
+blue:
+<p style="background-color:#0066FF">
+Color set by using hex value
+</p>
+
+
+
+div {
+    border: 2px solid #a1a1a1;
+    padding: 100px 40px;  //寬,長
+    background: #dddddd;
+    width: 300px;
+    border-radius: 25px;
+}
+
+字體
+	table{
+	border: 1px solid;
+	position: absolute;
+	left: 80px;
+	top: 560px;
+	padding: 4px 4px; 
+	border-radius: 7px;
+	frame="border";
+	rules="all";
+	}
+
+<a href="http://www.w3schools.com/html_links.htm#tips">Visit the Useful Tips Section</a>
