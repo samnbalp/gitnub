@@ -13,6 +13,10 @@ def handler(clientsocket):
 			print("\n"+data+"\n>>",end="")
 		elif(data[0:7]=="Message"):
 			print("\n"+data+"\n>>",end="")
+		elif(data[0:4]=="Talk"):
+			print("\n"+data+"\n",end="")
+		elif(data[0:12]=="Conversation"):
+			print("\n"+data+"\n",end="")
 		elif(data[0:5]=="@@@@@"):
 			print("\n"+data[5:]+"\n>>",end="")
 		else:
@@ -26,18 +30,20 @@ def enter_command_mod(clientsocket):
 	loop=1
 	input_data=""
 	output_data=""
+	new_data=""
 	while loop==1:
 		time.sleep(2)
 		print ("\n>>",end="")
 		data = input("")
 		if(data[0:4]=="talk"):
-			output_data=output_data+data+"\n"
 			print("")
-			input_data = input("")
+			clientsocket.send(data.encode('ascii'))
+			time.sleep(2)
 			while(input_data!='End'):
-				output_data=output_data+input_data+'\n'
 				input_data = input("")
-			clientsocket.send(output_data.encode('ascii'))
+				clientsocket.send(input_data.encode('ascii'))
+				#output_data=output_data+input_data+'\n'
+				#clientsocket.send(output_data.encode('ascii'))
 		else:
 			clientsocket.send(data.encode('ascii'))				
 			if(data=="logout"):

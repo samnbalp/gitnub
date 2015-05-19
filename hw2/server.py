@@ -17,6 +17,22 @@ account_arry={
 'simple':['simple',0,0,0]
 }
 
+def process_conversation(username,to_user):
+	stop=0
+	while stop==0:
+		data = (account_arry[username][2].recv(1024).decode('ascii'))
+		if(data=="End"):
+			print("yes")
+			stop=1
+			break
+		else:
+			msg="Conversation message from "+username+": "+data
+			if((account_arry[to_user][1]==1)and(account_arry[to_user][2]!=0)):
+				account_arry[to_user][2].send(msg.encode('ascii'))
+			elif((account_arry[to_user][1]==0)and(account_arry[to_user][2]==0)):
+				thread.start_new_thread(wait_useronline, (to_user,msg))
+
+
 #no online_user buffer queuing
 def wait_useronline(user,message):
 	stop=0
@@ -87,26 +103,12 @@ def process_anthor_request(username, clientaddr):
 			
 	elif(data[0:4]=="talk"):
 		special=1
-		data=data.split('\n')
-		to_user=data[0][5:]
-		msg="Message from "+username+": "
-		for arr in data[1:]:
-			if arr!='':
-				msg=msg+arr+"\n"	
-		for a in list(account_arry.keys()):
-			if((a==to_user)and(account_arry[a][1]==1)):
-				success=1
-				if(account_arry[to_user][3]!=username):
-					account_arry[to_user][2].send(msg.encode('ascii'))
-				break
-			elif((a==to_user)and(account_arry[a][1]==0)):
-				success=1
-				if(account_arry[to_user][3]!=username):
-					_thread.start_new_thread(wait_useronline, (to_user,msg))
-				break
-		if(success==0):
-			msg="Error!! "+to_user+" is an invalid user"
-			special=0
+		data=data.split()
+		to_user=data[1]
+		#msg="Message from "+to_user+": "
+		msg="Talk conversation setup successfully!!"
+		account_arry[username][2].send(msg.encode('ascii'))
+		process_conversation(username,to_user)
 			
 	else:
 		msg="No this command"
