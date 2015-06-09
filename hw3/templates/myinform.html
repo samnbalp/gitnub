@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Update my information{% endblock %}
+{% block body %}
+<form method="post" action="/myinform">
+
+  <label>My favor color: <input name="color" value="{{ color }}"></label>
+  <label>My aspiration <input name="aspiration" value="{{ aspiration }}"></label>
+  <label>My interest: <input name="interest" value="{{ interest }}"></label>
+  <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
+  <button type="submit">update information</button> | <a href="/">Cancel</a>
+</form>
+{% endblock %}
